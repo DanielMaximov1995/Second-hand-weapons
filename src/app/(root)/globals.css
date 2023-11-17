@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+
+}
+
+.shadow-custom {
+  box-shadow: 0px 0px 10px 0px rgba(26,33,56,0.30);
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(26,33,56,0.30);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(26,33,56,0.30);
+}
+
+@layer base {
+  .h1 {
+    @apply text-[30px] leading-tight md:text-[45px] my-8 font-semibold;
+  }
+  .h2 {
+    @apply text-[28px] leading-tight md:text-[40px] my-6 font-semibold;
+  }
+  .h3 {
+    @apply text-[24px] leading-tight md:text-[35px]  my-4 font-semibold;
+  }
+  .h4 {
+    @apply text-[22px] leading-tight md:text-[30px] my-4 font-semibold;
+  }
+  .h5 {
+    @apply text-[20px] leading-tight md:text-[25px] my-2 font-semibold;
+  }
+  .h6 {
+    @apply text-[18px] leading-tight md:text-[22px] my-2 font-semibold;
+  }
+  p {
+    @apply  my-2 tracking-wide;
+  }
+}
+
+@layer base {
+  .input {
+    @apply w-full h-[40px] transition-all duration-300 px-4 text-primary text-[18px] bg-white outline-secAccent outline outline-1 focus:outline-secondary focus:text-secondary;
+  }
+  .text-area {
+    @apply w-full h-[160px] transition-all duration-300 p-4 text-primary text-[18px] bg-white outline-secAccent outline outline-1 outline-secondary focus:text-secondary;
+  }
+  .btn {
+    @apply p-1 w-full transition-all duration-300 text-[20px] bg-primary text-center tracking-wide hover:tracking-widest text-white hover:bg-secondary;
+  }
+  .effect {
+    @apply transition-all duration-300;
+  }
+}

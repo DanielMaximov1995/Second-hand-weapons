@@ -1,0 +1,1 @@
+export { default as AccountIcon } from '@/components/Icons/Account Icon'
