@@ -22,6 +22,7 @@ export const authOptions: any = {
                             credentials.password,
                             user.password
                         );
+
                         if(!isPasswordCorrect) {
                             throw new Error("אימייל/סיסמה שגויים!");
                         }
@@ -52,11 +53,9 @@ export const authOptions: any = {
             await dbConnect();
             const getUser = await UserModel.findOne({ email });
             getUser.password = ''
+            getUser.fullName = getUser.fullName.trim()
             session.user = getUser
-            return {
-                ...getUser.toObject(),
-                expires: token.expired,
-            }
+            return getUser
         },
         async signIn({ user, account, profile, email, credentials }: any) {
             return true

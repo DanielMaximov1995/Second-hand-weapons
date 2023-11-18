@@ -8,7 +8,8 @@ export type ReactNodeType = {
 export type IconsType = {
     color ?: "primary" | "success" | "error" | "warning" | "info";
     fontSize ?: number;
-    position ?: "right" | "left" | "up" | "bottom"
+    position ?: "right" | "left" | "up" | "bottom";
+    type ?: boolean
 }
 
 export type CustomEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement> & {

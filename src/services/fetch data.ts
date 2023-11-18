@@ -3,24 +3,37 @@ import {dbConnect} from "@/utils/database/db";
 import UserModel from "@/utils/database/models/UserModel";
 import AdModel from "@/utils/database/models/AdModel";
 import {AdModelType, UserModelType} from "@/types/Models";
-
+import bcrypt from "bcryptjs";
 
 dbConnect()
 
 export const getAllUsers = async () => {
-    return UserModel.find().maxTimeMS(15000)
+    let data = await UserModel.find().maxTimeMS(15000)
+    return JSON.parse(JSON.stringify(data))
 }
 
 export const getUserByEmail = async (email : string) => {
-    return UserModel.findOne({email}).maxTimeMS(15000)
+    let data = await UserModel.findOne({email}).maxTimeMS(15000)
+    return JSON.parse(JSON.stringify(data))
 }
 
 export const addNewUser = async (data: UserModelType) => {
     try {
-        const newUser = await UserModel.create(data);
-        return { ad : newUser, message : 'התווסף בהצלחה' };
+        let emailExist = await UserModel.findOne({email : data.email.toLowerCase()})
+        if(emailExist) {
+            throw Error('אימייל זה קיים...')
+        }
+
+        let password = await bcrypt.hash(data.password, 10)
+
+        const newUser = await UserModel.create({
+            ...data,
+            email : data.email.toLowerCase(),
+            password
+        });
+
+        return JSON.parse(JSON.stringify({ newUser, message : 'התווסף בהצלחה' , success : true }))
     } catch (error) {
-        console.error(error)
         throw error;
     }
 };
@@ -28,7 +41,7 @@ export const addNewUser = async (data: UserModelType) => {
 export const editUser = async ( slug : string , data: UserModelType) => {
     try {
         const editUser = await UserModel.findOneAndUpdate({slug} , data);
-        return { ad : editUser, message : 'התעדכן בהצלחה' };
+        return JSON.parse(JSON.stringify({ editUser, message : 'התעדכן בהצלחה' }));
     } catch (error) {
         throw error;
     }
@@ -36,24 +49,27 @@ export const editUser = async ( slug : string , data: UserModelType) => {
 
 export const deleteUser = async ( email : string) => {
     try {
-        return UserModel.findOneAndDelete({email});
+        let data = await UserModel.findOneAndDelete({email})
+        return JSON.parse(JSON.stringify(data));
     } catch (error) {
         throw error;
     }
 };
 
 export const getAllAds = async () => {
-    return AdModel.find().maxTimeMS(15000)
+    let data = await AdModel.find().maxTimeMS(15000)
+    return JSON.parse(JSON.stringify(data))
 }
 
 export const getAdBySlug = async (slug : string) => {
-    return AdModel.findOne({slug}).maxTimeMS(15000)
+    let data = await AdModel.findOne({slug}).maxTimeMS(15000)
+    return JSON.parse(JSON.stringify(data))
 }
 
 export const addNewAd = async (data: AdModelType) => {
     try {
         const newAd = await AdModel.create(data);
-        return { ad : newAd, message : 'התווסף בהצלחה' };
+        return JSON.parse(JSON.stringify({ newAd, message : 'מודעה נוצרה בהצלחה' }))
     } catch (error) {
         throw error;
     }
@@ -62,7 +78,7 @@ export const addNewAd = async (data: AdModelType) => {
 export const editAd = async ( slug : string , data: AdModelType) => {
     try {
         const editAd = await AdModel.findOneAndUpdate({slug} , data);
-        return { ad : editAd, message : 'התעדכן בהצלחה' };
+        return JSON.parse(JSON.stringify({ ad : editAd, message : 'המודעה התעדכנה בהצלחה' }));
     } catch (error) {
         throw error;
     }
@@ -70,7 +86,8 @@ export const editAd = async ( slug : string , data: AdModelType) => {
 
 export const deleteAd = async ( slug : string , data: AdModelType) => {
     try {
-        return AdModel.findOneAndDelete({slug});
+        await AdModel.findOneAndDelete({slug})
+        return JSON.parse(JSON.stringify({message : 'המודעה נמחקה בהצלחה !'}));
     } catch (error) {
         throw error;
     }
