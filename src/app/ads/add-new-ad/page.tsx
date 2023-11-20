@@ -1,7 +1,7 @@
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 import AdForm from "@/components/Ads/Ad Form";
 import LoginForm from "@/components/Auth/Login/Login Form";
+import {authOptions} from "@/utils/authOprions";
 
 const PageNewAd = async () => {
     const session = await getServerSession(authOptions)
