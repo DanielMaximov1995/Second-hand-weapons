@@ -1,1 +1,6 @@
 export { default as AccountIcon } from '@/components/Icons/Account Icon'
+export { default as CloseIcon } from '@/components/Icons/Close Icon'
+export { default as FavoriteIcon } from '@/components/Icons/Favorite Icon'
+export { default as AddIcon } from '@/components/Icons/Add Icon'
+export { default as NewIcon } from '@/components/Icons/New Icon'
+export { default as EditIcon } from '@/components/Icons/Edit Icon'

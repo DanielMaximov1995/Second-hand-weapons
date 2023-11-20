@@ -24,8 +24,9 @@ const Layout = ({children}: { children: ReactNode }) => {
         <Toaster position="top-center" toastOptions={{ duration : 5000 }}/>
                 <AuthProvider>
                     <IndexHeader/>
-                    <div>שוק הירי | חיפוש | פרופיל</div>
-                        {children}
+                        <main className='w-[80%] mx-auto pt-20'>
+                            {children}
+                        </main>
                     <div>credit</div>
                 </AuthProvider>
             </body>

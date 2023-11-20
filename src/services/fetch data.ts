@@ -2,8 +2,9 @@
 import {dbConnect} from "@/utils/database/db";
 import UserModel from "@/utils/database/models/UserModel";
 import AdModel from "@/utils/database/models/AdModel";
-import {AdModelType, UserModelType} from "@/types/Models";
+import {AdModelType, BrandTypeModel, UserModelType} from "@/types/Models";
 import bcrypt from "bcryptjs";
+import BrendModel from "@/utils/database/models/BrendModel";
 
 dbConnect()
 
@@ -92,3 +93,46 @@ export const deleteAd = async ( slug : string , data: AdModelType) => {
         throw error;
     }
 };
+
+export const getAllBrands = async () => {
+    let data = await BrendModel.find().maxTimeMS(15000)
+    return JSON.parse(JSON.stringify(data))
+}
+
+export const getBrand = async (id : string) => {
+    let data = await BrendModel.findById(id).maxTimeMS(15000)
+    return JSON.parse(JSON.stringify(data))
+}
+
+export const addNewBrand = async (data?: BrandTypeModel) => {
+    try {
+        let getBrand = await BrendModel.findOne({name : data?.name})
+
+        if(getBrand) {
+            throw Error('מותג זה קיים...')
+        }
+
+        const newAd = await BrendModel.create(data);
+        return JSON.parse(JSON.stringify({ newAd, message : `${data?.name} צורף בהצלחה !` }))
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const editBrand = async ( id : string , data?: BrandTypeModel) => {
+    try {
+        const editBrand = await BrendModel.findByIdAndUpdate(id, data);
+        return JSON.parse(JSON.stringify({ad: editBrand, message: 'המותג התעדכן בהצלחה'}));
+    } catch (error) {
+        throw error;
+    }
+}
+
+    export const deleteBrand = async (id : string) => {
+        try {
+            await BrendModel.findByIdAndDelete(id)
+            return JSON.parse(JSON.stringify({message : 'המותג נמחק בהצלחה !'}));
+        } catch (error) {
+            throw error;
+        }
+    }

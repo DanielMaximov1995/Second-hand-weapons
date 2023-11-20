@@ -6,7 +6,7 @@ import {signIn} from "next-auth/react";
 import toast from 'react-hot-toast'
 import Link from "next/link";
 
-const LoginForm = () => {
+const LoginForm = ({switchToRegister} : { switchToRegister ?: () => void }) => {
     const [form, setForm] = useState({email: '', password: ''});
 
     const handleChange = (e: CustomEvent) => {

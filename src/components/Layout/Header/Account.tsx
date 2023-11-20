@@ -1,8 +1,8 @@
 'use client'
 import { AccountIcon } from "@/components/Icons";
-import { useRef , useState , useEffect } from 'react'
+import {useRef, useState, useEffect, MouseEventHandler} from 'react'
 import LoginForm from "@/components/Auth/Login/Login Form";
-import {useRouter , useSearchParams} from "next/navigation";
+import {useRouter } from "next/navigation";
 import Link from "next/link";
 import RegisterForm from "@/components/Auth/Register/Register Form";
 import {useSession} from "next-auth/react";
@@ -12,15 +12,12 @@ const Account = () => {
     const [open, setOpen] = useState(false);
     const boxRef = useRef<HTMLDivElement | null>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
-    const router = useRouter()
-    const searchParams = useSearchParams()
-    const getAuth = searchParams.get('auth')
+    const [formType, setFormType] = useState<"login" | "register">('login');
     const { data , status } = useSession()
 
-    const openBox = () => {
-        setOpen(prev => !prev)
-        return !open ? router.push('?auth=login') : router.back()
-    }
+    const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+        setOpen((prev) => !prev);
+    };
 
     useEffect(() => {
         const handleOutsideClick = async (event : MouseEvent) => {
@@ -30,7 +27,6 @@ const Account = () => {
                 buttonRef.current &&
                 !buttonRef?.current?.contains(event.target as Node)
             ) {
-                open && router.back()
                 setOpen(false)
             }
         };
@@ -41,28 +37,20 @@ const Account = () => {
         };
     }, [boxRef, buttonRef, setOpen]);
 
-    useEffect(() => {
-        if(status === 'unauthenticated' && !open) {
-            router.push('?auth=login')
-        }
-    },[open , status])
-
     let formOption = {
-        login : <LoginForm/>,
-        register : <RegisterForm/>,
+        login : <LoginForm switchToRegister={() => setFormType('register')}/>,
+        register : <RegisterForm switchToLogin={() => setFormType('login')}/>,
     }
-
-    const selectedForm = formOption[getAuth as keyof typeof formOption] || <LoginForm />; // Ensure getAuth is not null when accessing formOption
 
     let statusOptions = {
         loading : 'טוען...',
-        authenticated : <AccountOptions user={data} closeAccount={openBox}/>,
-        unauthenticated : selectedForm
+        authenticated : <AccountOptions user={data}/>,
+        unauthenticated : formOption[formType]
     }
 
     return (
         <div className='relative'>
-            <button ref={buttonRef} onClick={openBox}>
+            <button ref={buttonRef} onClick={handleButtonClick}>
                 <AccountIcon fontSize={50}/>
             </button>
             <div

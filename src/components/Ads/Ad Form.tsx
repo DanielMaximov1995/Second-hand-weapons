@@ -26,13 +26,15 @@ const AdForm = () => {
     };
 
     const handleSubmit = () => {
-        'use server'
 
         
     }
 
     return (
-        <div>AdForm</div>
+        <div className='flex flex-wrap w-full'>
+            {/*<*/}
+            <input className='input' placeholder='כותרת'/>
+        </div>
     )
 }
 export default AdForm

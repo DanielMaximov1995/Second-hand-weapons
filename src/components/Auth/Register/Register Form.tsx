@@ -9,7 +9,7 @@ import {addNewUser} from "@/services/fetch data";
 import VisibleIcon from "@/components/Icons/Visible Icon";
 import {useRouter} from "next/navigation";
 
-const RegisterForm = () => {
+const RegisterForm = ({switchToLogin} : { switchToLogin : () => void }) => {
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -61,9 +61,8 @@ const RegisterForm = () => {
             error: (data) => {
                 return data.message
             },
-        }).then(async () => {
-            await signIn('credentials' , { redirect : false , email : form.email , password : form.password })
-            return router.push('?')
+        }).then(() => {
+            return signIn('credentials' , { redirect : false , email : form.email , password : form.password })
         })
     };
 
