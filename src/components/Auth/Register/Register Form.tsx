@@ -19,8 +19,6 @@ const RegisterForm = ({switchToLogin} : { switchToLogin : () => void }) => {
         phone: ''
     });
     const [showPass, setShowPass] = useState<boolean>(false);
-    const router = useRouter()
-
 
     useEffect(() => {
         setForm(prev => ({
