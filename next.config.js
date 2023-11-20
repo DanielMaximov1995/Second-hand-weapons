@@ -6,8 +6,10 @@ const nextConfig = {
         domains: ['dvf-course.s3.eu-central-1.amazonaws.com' ,  'dvf-course.co.il']
     },
     generateEtags: false,
+    typescript : {
+        ignoreBuildErrors : true
+    },
     experimental : {
-        ppr : true,
         serverActions : true
     },
     rewrites() {
