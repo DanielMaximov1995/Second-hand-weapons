@@ -55,7 +55,7 @@ const Account = () => {
             </button>
             <div
                 ref={boxRef}
-                className={`bg-accentBg dark:bg-accentSec shadow-custom rounded p-2 w-[300px] z-50 h-auto absolute left-0 top-[100%] mt-2 bg-white transition-all duration-300 ${!open ? 'opacity-0 hidden' : 'block opacity-100'}`}
+                className={`bg-accentBg dark:bg-accentSec shadow-custom rounded p-2 w-[300px] z-high h-auto absolute left-0 top-[100%] mt-2 bg-white transition-all duration-300 ${!open ? 'opacity-0 hidden' : 'block opacity-100'}`}
             >
                 {statusOptions[status]}
             </div>

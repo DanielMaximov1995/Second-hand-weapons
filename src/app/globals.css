@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 
-body {
-
+.z-high {
+  z-index: 9999;
 }
 
 .shadow-custom {
