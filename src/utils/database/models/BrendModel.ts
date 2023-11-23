@@ -3,7 +3,7 @@ import {BrandTypeModel} from "@/types/Models";
 
 const BrandModel = new mongoose.Schema<BrandTypeModel>({
     name : { type : String},
-    models : [{ type : String }]
+    models : [{name : {type : String}}]
 },{timestamps : true});
 
 export default mongoose.models?.brand ||

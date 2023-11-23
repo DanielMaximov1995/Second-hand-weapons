@@ -4,15 +4,16 @@ import {useEffect, useState , FormEvent} from "react";
 import {CloseIcon} from "@/components/Icons";
 import {CustomEvent} from "@/types/others";
 import toast from "react-hot-toast";
+import {ModelType, ObjectIdType} from "@/types/Models";
 
 type InputTypeProps = {
-    handleChange ?: (e: string[]) => void;
-    data ?: string[]
+    handleChange ?: (e: ModelType[]) => void;
+    data ?: ModelType[]
 }
 
 const InputWithChip = (props : InputTypeProps) => {
     const { handleChange , data } = props
-    const [values, setValues] = useState<string[]>( []);
+    const [values, setValues] = useState<ModelType[]>( []);
     const [query, setQuery] = useState('');
 
     useEffect(() => {
@@ -29,14 +30,15 @@ const InputWithChip = (props : InputTypeProps) => {
 
     const handleAddToValues = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let value = query.toLowerCase().trim()
-        return values.includes(value)
+        let obj = {name : query.toLowerCase().trim()}
+        let findObj = values.find(x => x.name === obj.name)
+        return findObj
             ? toast.error('הערך קיים כבר ברשימה !')
-            : (setValues((prevValues) => [...prevValues, value]), setQuery(''));
+            : (setValues((prevValues) => [...prevValues, obj]), setQuery(''));
     };
 
     const deleteValue = (value : string) => {
-        const remove = values.filter(val => val !== value)
+        const remove = values.filter(val => val?.name !== value)
         setValues(remove)
     }
 
@@ -45,8 +47,8 @@ const InputWithChip = (props : InputTypeProps) => {
             {
                 values.map((value , index) => (
                     <div key={`value-${value}-${index}`} className='bg-primary text-white w-max flex z-high gap-x-2 px-2 mb-2 mx-2 rounded-md items-center'>
-                        <span className='text-white'>{value}</span>
-                        <span onClick={(e) => deleteValue(value)} className='bg-white text-primary cursor-pointer rounded-full'>
+                        <span className='text-white'>{value.name}</span>
+                        <span onClick={(e) => deleteValue(value?.name!)} className='bg-white text-primary cursor-pointer rounded-full'>
                                     <CloseIcon/>
                                 </span>
                     </div>

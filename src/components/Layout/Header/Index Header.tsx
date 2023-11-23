@@ -7,7 +7,7 @@ import {FavoriteIcon} from "@/components/Icons";
 
 const IndexHeader = () => {
     return (
-        <header className='h-20 px-2 flex justify-between items-center bg-secAccent/60 fixed w-full'>
+        <header className='h-20 z-high px-2 flex justify-between items-center bg-[#BFC7E1] fixed w-full'>
             {/*<Image src='' alt/>*/}
                 <Link
                     className="w-[109px] h-[70px] relative"  href="/">

@@ -54,7 +54,7 @@ export const authOptions: any = {
             getUser.password = ''
             getUser.fullName = getUser.fullName.trim()
             session.user = getUser
-            return getUser
+            return session
         },
         async signIn() {
             return true

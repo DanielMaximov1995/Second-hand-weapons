@@ -35,8 +35,13 @@ export type AdModelType = {
     sold ?: boolean;
 }
 
+export type ModelType = {
+    _id?: ObjectIdType;
+    name ?: string
+}
+
 export type BrandTypeModel = {
     _id?: ObjectIdType;
     name : string;
-    models : string[];
+    models ?: ModelType[];
 }

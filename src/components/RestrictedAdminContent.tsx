@@ -15,9 +15,9 @@ const RestrictedAdminContent = ({ children } : ReactNodeType) => {
         return null
     }
 
-    if (isLoggedIn && data?.role === 'admin') {
+    if (isLoggedIn && data?.user?.role === 'admin') {
         return <>{children}</>;
-    } else if(isLoggedIn && data?.role === 'user') {
+    } else if(isLoggedIn && data?.user?.role === 'user') {
         return <div className='text-center text-[30px] font-semibold'>
             <p>אינך מורשה לגשת לדף זה!</p>
         </div>

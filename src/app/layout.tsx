@@ -5,7 +5,8 @@ import {ReactNode} from "react";
 import AuthProvider from "@/components/Auth/Auth Provider";
 import Script from "next/script";
 import IndexHeader from "@/components/Layout/Header/Index Header";
-import { Toaster } from 'react-hot-toast';
+import {Toaster} from 'react-hot-toast';
+import {EdgeStoreProvider} from "@/utils/edgeStore";
 
 const assistant = Assistant({subsets: ['latin']})
 
@@ -18,18 +19,20 @@ export const dynamic = 'force-dynamic'
 
 const Layout = ({children}: { children: ReactNode }) => {
     return (
-        <html lang="en" dir='rtl' style={{ scrollBehavior : 'smooth' }}>
+        <html lang="en" dir='rtl' style={{scrollBehavior: 'smooth'}}>
         {/*<Script src="https://cdn.userway.org/widget.js" data-language="he" data-account={process.env.USERWAY!}></Script>*/}
         <body className={assistant.className} suppressHydrationWarning={true}>
-        <Toaster position="top-center" toastOptions={{ duration : 5000 }}/>
-                <AuthProvider>
-                    <IndexHeader/>
-                        <main className='w-[80%] mx-auto pt-20'>
-                            {children}
-                        </main>
-                    <div>credit</div>
-                </AuthProvider>
-            </body>
+        <Toaster position="top-center" toastOptions={{duration: 5000}}/>
+        <EdgeStoreProvider>
+            <AuthProvider>
+                <IndexHeader/>
+                <main className='w-[80%] mx-auto pt-20'>
+                    {children}
+                </main>
+                <div>credit</div>
+            </AuthProvider>
+        </EdgeStoreProvider>
+        </body>
         </html>
     )
 }

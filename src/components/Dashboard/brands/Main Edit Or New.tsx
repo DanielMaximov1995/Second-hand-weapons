@@ -1,7 +1,7 @@
 'use client'
 import {useEffect, useState} from "react";
 import Modal from "@/components/Modal";
-import {BrandTypeModel} from "@/types/Models";
+import {BrandTypeModel, ModelType} from "@/types/Models";
 import InputWithChip from "@/components/Input With Chip";
 import {CustomEvent} from "@/types/others";
 import toast from "react-hot-toast";
@@ -35,7 +35,7 @@ const MainEditOrNew = (props : MainEditOrNewType) => {
         }));
     }
 
-    const handleModels = (e : string[]) => {
+    const handleModels = (e : ModelType[]) => {
         setForm((prev) => ({
             ...prev,
             models : e,
@@ -88,7 +88,7 @@ const MainEditOrNew = (props : MainEditOrNewType) => {
                        <input value={form.name || ""} className='input' name='name' placeholder='שם המותג' onChange={handleChange}/>
                    </div>
                    <div className='w-full p-2'>
-                        <InputWithChip handleChange={handleModels} data={form.models}/>
+                        <InputWithChip handleChange={handleModels} data={form.models || [] || undefined}/>
                    </div>
                    <div className='w-full px-2 py-1'>
                        <button onClick={handleSubmit} className='btn'>שמירה</button>

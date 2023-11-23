@@ -44,7 +44,7 @@ const Account = () => {
 
     let statusOptions = {
         loading : 'טוען...',
-        authenticated : <AccountOptions user={data}/>,
+        authenticated : <AccountOptions user={data?.user}/>,
         unauthenticated : formOption[formType]
     }
 
